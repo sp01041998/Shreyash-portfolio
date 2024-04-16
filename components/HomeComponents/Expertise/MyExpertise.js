@@ -2,14 +2,12 @@ import ExpertiseCard from "./ExpertiseCard"
 import { useQuery } from "react-query";
 import axios from "axios";
 import ParagraphSkeleton from "../../Common/ParagraphSkeleton";
+import { expertise } from "../../../constants/constants";
+import { useState } from "react";
 
 const MyExpertise = () => {
 
-    const { isLoading, error, data } = useQuery('expertise', () =>
-        axios.get('api/expertise')
-            .then(({ data }) => data)
-            .catch(error => console.error('Error fetching testimonials:', error)))
-
+    const [isLoading, setIsLoading] = useState(false)
     return (
         <>
             <div className="px-2 md:px-8 py-4 text-lg font-bold text-Snow">My Expertise</div>
@@ -17,11 +15,14 @@ const MyExpertise = () => {
 
                 {
                     isLoading ?
-                        [1, 2, 3, 4, 5, 6].map(() => (
-                            <ParagraphSkeleton className={"space-y-2 p-8"} />
+                        [1, 2, 3, 4, 5, 6].map((ele) => (
+                            <div key={ele}>
+                                <ParagraphSkeleton className={"space-y-2 p-8"} />   
+                            </div>
+                            
                         ))
                         :
-                        data?.map((data, key) => (
+                        expertise?.map((data, key) => (
                             <ExpertiseCard key={key} data={data} />
                         ))
                 }

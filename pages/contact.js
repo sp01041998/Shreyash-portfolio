@@ -7,28 +7,48 @@ import { BsChatTextFill } from 'react-icons/bs'
 import Fiverr_Icon from '../components/Fiverr_Icon';
 import Footer from '../components/Footer';
 import { Modal } from 'antd';
+import { transporter, maillOptions } from '../utils/helper';
+
 
 const Contact = () => {
     const [isOpen, setIsOpen] = useState(false)
+    const [senderName, setSenderName] = useState("")
+    const [senderEmail, setSenderEmail] = useState("")
+    const [emailBody, setEmailBody] = useState("")
+
+
+    async function sendEmail(){
+        try{
+
+            await transporter.sendMail({
+                ...maillOptions,
+                subject : "SHreyash mail",
+                text : "this is text email",
+                html : "<h1>Test title</h1>"
+            }) 
+        }catch(error){
+
+        }
+    }
 
     return (
         <BannerLayout>
             <div className=" px-4 py-2">
                 <div className="my-6 text-Snow flex flex-col gap-y-5">
                     <h1 className='text-lg font-bold'>Contact Information</h1>
-                    <div className="flex flex-col md:flex-row items-center gap-5 text-xs">
+                    {/* <div className="flex flex-col md:flex-row items-center gap-5 text-xs">
                         <div className="card_stylings w-full md:w-1/2 p-5 md:p-6 lg:p-8 flex flex-col gap-y-4">
                             <div className="flex justify-between items-center">
                                 <span className='md:text-base'>Country:</span>
-                                <span className='text-LightGray md:text-sm'>Pakistan</span>
+                                <span className='text-LightGray md:text-sm'>India</span>
                             </div>
                             <div className="flex justify-between items-center">
                                 <span className='md:text-base'>City:</span>
-                                <span className='text-LightGray md:text-sm'>Peshawar</span>
+                                <span className='text-LightGray md:text-sm'>Bengaluru</span>
                             </div>
                             <div className="flex justify-between items-center">
                                 <span className='md:text-base'>Company:</span>
-                                <span className='text-LightGray md:text-sm'>visualsX</span>
+                                <span className='text-LightGray md:text-sm'>FanPlay Games and</span>
                             </div>
                         </div>
                         <div className="card_stylings rounded-xl w-full md:w-1/2 p-5 md:p-6 lg:p-8 flex flex-col gap-y-4">
@@ -45,15 +65,15 @@ const Contact = () => {
                                 <span className='text-LightGray text-sm'>+92 (315) 9591822</span>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
                 <div className="h-16 w-full card_stylings text-xl sm:text-3xl flex gap-x-8 sm:gap-x-16 items-center justify-center text-Snow">
-                    <a className='hover:scale-125 ease-in-out duration-700' href="" target='_blank' rel="noreferrer"><HiMail /></a>
-                    <a className='hover:scale-125 ease-in-out duration-700' href="https://github.com/osamajavaid" target='_blank' rel="noreferrer"><FaGithub /></a>
-                    <a className='hover:scale-125 ease-in-out duration-700' href="https://www.linkedin.com/in/iosamajavaid/" target='_blank' rel="noreferrer"><FaLinkedin /></a>
+                    {/* <a className='hover:scale-125 ease-in-out duration-700' href="" target='_blank' rel="noreferrer"><HiMail /></a> */}
+                    <a className='hover:scale-125 ease-in-out duration-700' href="https://github.com/sp01041998" target='_blank' rel="noreferrer"><FaGithub /></a>
+                    <a className='hover:scale-125 ease-in-out duration-700' href="https://www.linkedin.com/in/shreyash-patel-6461111a0/" target='_blank' rel="noreferrer"><FaLinkedin /></a>
                     {/* <a className='hover:scale-125 ease-in-out duration-700' href="https://x.com/iosamajavaid" target='_blank' rel="noreferrer"><FaTwitter /></a> */}
-                    <a className='hover:scale-125 ease-in-out duration-700 hidden sm:block' href="https://www.fiverr.com/codeworthy" target='_blank' rel="noreferrer"><Fiverr_Icon /></a>
-                    <a className='hover:scale-125 ease-in-out duration-700 text-2xl sm:text-4xl mt-1' href="#" target='_blank' rel="noreferrer"><SiUpwork /></a>
+                    {/* <a className='hover:scale-125 ease-in-out duration-700 hidden sm:block' href="https://www.fiverr.com/codeworthy" target='_blank' rel="noreferrer"><Fiverr_Icon /></a>
+                    <a className='hover:scale-125 ease-in-out duration-700 text-2xl sm:text-4xl mt-1' href="#" target='_blank' rel="noreferrer"><SiUpwork /></a> */}
                 </div>
 
 
@@ -66,7 +86,7 @@ const Contact = () => {
                                     <div id="icon" className="absolute inset-y-0 left-0 flex items-center pl-3 text-xl pointer-events-none">
                                         <HiUser />
                                     </div>
-                                    <input type="text" className="input_stylings" placeholder="Name" />
+                                    <input type="text" className="input_stylings" placeholder="Name" value={senderName} onChange={(e) => {setSenderName(e.target.value)}}/>
                                 </div>
                             </div>
 
@@ -75,7 +95,7 @@ const Contact = () => {
                                     <div id="icon" className="absolute inset-y-0 left-0 flex items-center text-xl pl-3 pointer-events-none">
                                         <HiMail />
                                     </div>
-                                    <input type="text" className="input_stylings" placeholder="Email" />
+                                    <input type="text" className="input_stylings" placeholder="Email" value={senderEmail} onChange={(e) => {setSenderEmail(e.target.value)}} />
                                 </div>
                             </div>
 
@@ -84,12 +104,12 @@ const Contact = () => {
                                     <div id="icon" className="absolute top-3 left-0 flex items-center text-lg pl-3 pointer-events-none">
                                         <BsChatTextFill />
                                     </div>
-                                    <textarea rows={6} cols={50} className="input_stylings" placeholder="Message" />
+                                    <textarea rows={6} cols={50} className="input_stylings" placeholder="Message" value={emailBody} onChange={(e) => {setEmailBody(e.target.value)}} />
                                 </div>
                             </div>
 
                             <div className="my-4">
-                                <button onClick={() => setIsOpen(true)} className="button"> SEND MESSAGE </button>
+                                <button onClick={() => sendEmail()} className="button"> SEND MESSAGE </button>
                             </div>
                         </div>
                     </div>
@@ -106,10 +126,10 @@ const Contact = () => {
                 onOk={() => setIsOpen(false)}
                 onCancel={() => setIsOpen(false)}
             >
-                <div className='flex flex-col items-center justify-center'>
+                {/* <div className='flex flex-col items-center justify-center'>
                     <h1 className='text-Green font-bold text-2xl'>In Progress</h1>
                     <a className='underline text-Snow' target='_blank' href='https://github.com/osamajavaid/portfolio'>Be the one to integrate this!</a>
-                </div>
+                </div> */}
             </Modal>
             <Footer />
         </BannerLayout>
